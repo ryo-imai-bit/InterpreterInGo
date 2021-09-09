@@ -1,29 +1,29 @@
 package ast
 
 import (
-    "testing"
+	"testing"
 
-    "github.com/ryo-imai-bit/InterpreterInGo/token"
+	"github.com/ryo-imai-bit/InterpreterInGo/token"
 )
 
 func TestString(t *testing.T) {
-    program := &Program{
-        Statements: []Statement{
-            &LetStatement{
-                Token: token.Token{Type: token.LET, Literal: "let"},
-                Name: &Identifier{
-                    Token: token.Token{Type: token.IDENT, Literal: "myVar"},
-                    Value: "myVar",
-                },
-                Value: &Identifier{
-                    Token: token.Token{Type: token.IDENT, Literal: "anotherVar"},
-                    Value: "anotherVar",
-                },
-            },
-        },
-    }
+	program := &Program{
+		Statements: []Statement{
+			&LetStatement{
+				Token: token.Token{Type: token.LET, Literal: "let"},
+				Name: &Identifier{
+					Token: token.Token{Type: token.IDENT, Literal: "myVar"},
+					Value: "myVar",
+				},
+				Value: &Identifier{
+					Token: token.Token{Type: token.IDENT, Literal: "anotherVar"},
+					Value: "anotherVar",
+				},
+			},
+		},
+	}
 
-    if program.String() != "let myVar = anotherVar;" {
-        t.Errorf("program.String() wrong. got=%q", program.String())
-    }
+	if program.String() != "let myVar = anotherVar;" {
+		t.Errorf("program.String() wrong. got=%q", program.String())
+	}
 }
