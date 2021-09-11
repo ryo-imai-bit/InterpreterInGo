@@ -7,12 +7,15 @@ import (
 
 	"github.com/ryo-imai-bit/InterpreterInGo/lexer"
 	"github.com/ryo-imai-bit/InterpreterInGo/parser"
+	"github.com/ryo-imai-bit/InterpreterInGo/evaluator"
+	"github.com/ryo-imai-bit/InterpreterInGo/object"
 )
 
 const PROMPT = ">> "
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
+    env := object.NewEnviroment()
 
 	for {
 		fmt.Printf(PROMPT)
@@ -31,8 +34,15 @@ func Start(in io.Reader, out io.Writer) {
             continue
         }
         
-        io.WriteString(out, program.String())
-        io.WriteString(out, "\n")
+        evaluated := evaluator.Eval(program, env)
+        if evaluated != nil {
+            io.WriteString(out, evaluated.Inspect())
+            io.WriteString(out, "\n")
+        }
+        
+        // parser
+        //io.WriteString(out, program.String())
+        //io.WriteString(out, "\n")
 
         // lexer
 		//for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
