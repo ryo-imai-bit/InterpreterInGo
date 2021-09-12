@@ -32,6 +32,8 @@ func TestNextToken(t *testing.T) {
     "hoge \"hoge\" hoge"
     "\thoge\t"
     "hoge \thoge\t hoge"
+    [1, 2];
+    {"foo": "bar"}
     `
 
 	tests := []struct {
@@ -117,6 +119,17 @@ func TestNextToken(t *testing.T) {
 		{token.STRING, "hoge \"hoge\" hoge"},
 		{token.STRING, "\thoge\t"},
 		{token.STRING, "hoge \thoge\t hoge"},
+		{token.LBRACKET, "["},
+		{token.INT, "1"},
+		{token.COMMA, ","},
+		{token.INT, "2"},
+		{token.RBRACKET, "]"},
+		{token.SEMICOLON, ";"},
+		{token.LBRACE, "{"},
+		{token.STRING, "foo"},
+        {token.COLON, ":"},
+		{token.STRING, "bar"},
+		{token.RBRACE, "}"},
 		{token.EOF, ""},
 	}
 
@@ -134,3 +147,4 @@ func TestNextToken(t *testing.T) {
 		}
 	}
 }
+

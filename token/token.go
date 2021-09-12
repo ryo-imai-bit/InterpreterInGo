@@ -32,12 +32,15 @@ const (
 
 	// デリミタ
 	COMMA     = ","
+	COLON = ":"
 	SEMICOLON = ";"
 
 	LPAREN = "("
 	RPAREN = ")"
 	LBRACE = "{"
 	RBRACE = "}"
+    LBRACKET = "["
+    RBRACKET = "]"
 
 	// キーワード
 	FUNCTION = "FUNCTION"
