@@ -1,6 +1,8 @@
 package lexer
 
 import (
+    "strings"
+
 	"github.com/ryo-imai-bit/InterpreterInGo/token"
 )
 
@@ -75,6 +77,9 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.LBRACE, l.ch)
 	case '}':
 		tok = newToken(token.RBRACE, l.ch)
+	case '"':
+        tok.Type = token.STRING
+        tok.Literal = l.readString()
 	case 0:
 		tok.Literal = ""
 		tok.Type = token.EOF
@@ -122,6 +127,33 @@ func (l *Lexer) peekChar() byte {
 	} else {
 		return l.input[l.readPosition]
 	}
+}
+
+func (l *Lexer) readString() string {
+    var strs []string
+    position := l.position + 1
+    for {
+        l.readChar()
+        switch l.ch {
+        case '\\':
+            l.readChar()
+            switch l.ch {
+            // implement escape literal
+            case '"':
+                strs = append(strs, l.input[position:l.position - 1] + "\"")
+                position = l.position + 1
+            case 't':
+                strs = append(strs, l.input[position:l.position - 1] + "\t")
+                position = l.position + 1
+            case 'n':
+                strs = append(strs, l.input[position:l.position - 1] + "\n")
+                position = l.position + 1
+            }
+        case '"', 0:
+            strs = append(strs, l.input[position:l.position])
+            return strings.Join(strs, "")
+        }
+    }
 }
 
 func isDigit(ch byte) bool {
