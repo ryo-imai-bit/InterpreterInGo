@@ -5,17 +5,17 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/ryo-imai-bit/InterpreterInGo/lexer"
-	"github.com/ryo-imai-bit/InterpreterInGo/parser"
 	"github.com/ryo-imai-bit/InterpreterInGo/evaluator"
+	"github.com/ryo-imai-bit/InterpreterInGo/lexer"
 	"github.com/ryo-imai-bit/InterpreterInGo/object"
+	"github.com/ryo-imai-bit/InterpreterInGo/parser"
 )
 
 const PROMPT = ">> "
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
-    env := object.NewEnviroment()
+	env := object.NewEnviroment()
 
 	for {
 		fmt.Printf(PROMPT)
@@ -26,27 +26,27 @@ func Start(in io.Reader, out io.Writer) {
 
 		line := scanner.Text()
 		l := lexer.New(line)
-        p := parser.New(l)
+		p := parser.New(l)
 
-        program := p.ParseProgram()
-        if len(p.Errors()) != 0 {
-            printParseErrors(out, p.Errors())
-            continue
-        }
-        
-        evaluated := evaluator.Eval(program, env)
-        if evaluated != nil {
-            io.WriteString(out, evaluated.Inspect())
-            io.WriteString(out, "\n")
-        }
-        
-        // parser
-        //io.WriteString(out, program.String())
-        //io.WriteString(out, "\n")
+		program := p.ParseProgram()
+		if len(p.Errors()) != 0 {
+			printParseErrors(out, p.Errors())
+			continue
+		}
 
-        // lexer
+		evaluated := evaluator.Eval(program, env)
+		if evaluated != nil {
+			io.WriteString(out, evaluated.Inspect())
+			io.WriteString(out, "\n")
+		}
+
+		// parser
+		//io.WriteString(out, program.String())
+		//io.WriteString(out, "\n")
+
+		// lexer
 		//for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
-			//fmt.Printf("%+v\n", tok)
+		//fmt.Printf("%+v\n", tok)
 		//}
 	}
 }
@@ -65,10 +65,10 @@ const MONKEY_FACE = `            __,__
 `
 
 func printParseErrors(out io.Writer, errors []string) {
-    io.WriteString(out, MONKEY_FACE)
-    io.WriteString(out, "Woops! We ran into some monkey business here!\n")
-    io.WriteString(out, " parse errors:\n")
-    for _, msg := range errors {
-        io.WriteString(out, "\t"+msg+"\n")
-    }
+	io.WriteString(out, MONKEY_FACE)
+	io.WriteString(out, "Woops! We ran into some monkey business here!\n")
+	io.WriteString(out, " parse errors:\n")
+	for _, msg := range errors {
+		io.WriteString(out, "\t"+msg+"\n")
+	}
 }
