@@ -443,21 +443,21 @@ func (p *Parser) parseHashLiteral() ast.Expression {
 }
 
 func (p *Parser) parseMacroLiteral() ast.Expression {
-    lit := &ast.MacroLiteral{Token: p.curToken}
+	lit := &ast.MacroLiteral{Token: p.curToken}
 
-    if !p.expectPeek(token.LPAREN) {
-        return nil
-    }
+	if !p.expectPeek(token.LPAREN) {
+		return nil
+	}
 
-    lit.Parameters = p.parseFunctionParameters()
+	lit.Parameters = p.parseFunctionParameters()
 
-    if !p.expectPeek(token.LBRACE) {
-        return nil
-    }
+	if !p.expectPeek(token.LBRACE) {
+		return nil
+	}
 
-    lit.Body = p.parseBlockStatement()
+	lit.Body = p.parseBlockStatement()
 
-    return lit
+	return lit
 }
 
 func (p *Parser) curTokenIs(t token.TokenType) bool {

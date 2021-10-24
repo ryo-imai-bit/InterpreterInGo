@@ -22,8 +22,8 @@ const (
 	BUILTIN_OBJ      = "BUILTIN"
 	ARRAY_OBJ        = "ARRAY"
 	HASH_OBJ         = "HASH"
-    QUOTE_OBJ = "QUOTE"
-    MACRO_OBJ = "MACRO"
+	QUOTE_OBJ        = "QUOTE"
+	MACRO_OBJ        = "MACRO"
 )
 
 type Object interface {
@@ -183,12 +183,12 @@ type Hashable interface {
 }
 
 type Quote struct {
-    Node ast.Node
+	Node ast.Node
 }
 
 func (q *Quote) Type() ObjectType { return QUOTE_OBJ }
 func (q *Quote) Inspect() string {
-    return "QUOTE(" + q.Node.String() + ")"
+	return "QUOTE(" + q.Node.String() + ")"
 }
 
 type Macro struct {
@@ -215,5 +215,3 @@ func (m *Macro) Inspect() string {
 
 	return out.String()
 }
-
-

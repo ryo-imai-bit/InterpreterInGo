@@ -359,4 +359,3 @@ func (ml *MacroLiteral) String() string {
 
 	return out.String()
 }
-
