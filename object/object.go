@@ -191,6 +191,7 @@ func (q *Quote) Inspect() string {
 	return "QUOTE(" + q.Node.String() + ")"
 }
 
+// env にはobjectしかぶら下げられないので
 type Macro struct {
 	Parameters []*ast.Identifier
 	Body       *ast.BlockStatement
