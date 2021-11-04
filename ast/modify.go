@@ -41,6 +41,12 @@ func Modify(node Node, modifier ModifierFunc) Node {
 		for i, _ := range node.Elements {
 			node.Elements[i], _ = Modify(node.Elements[i], modifier).(Expression)
 		}
+	case *CallExpression:
+		if node.Function.TokenLiteral() != "unquote" {
+			for i, _ := range node.Arguments {
+				node.Arguments[i] = Modify(node.Arguments[i], modifier).(Expression)
+			}
+		}
 	case *HashLiteral:
 		newPairs := make(map[Expression]Expression)
 		for key, val := range node.Pairs {
