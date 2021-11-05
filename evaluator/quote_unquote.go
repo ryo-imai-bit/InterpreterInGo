@@ -58,6 +58,9 @@ func convertObjectToASTNode(obj object.Object) ast.Node {
 			t = token.Token{Type: token.FALSE, Literal: "false"}
 		}
 		return &ast.Boolean{Token: t, Value: obj.Value}
+	case *object.Function:
+		t := token.Token{Type: token.FUNCTION, Literal: "fn"}
+		return &ast.FunctionLiteral{Token: t, Parameters: obj.Parameters, Body: obj.Body}
 	case *object.Quote:
 		return obj.Node
 	default:

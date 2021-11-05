@@ -43,6 +43,7 @@ func Modify(node Node, modifier ModifierFunc) Node {
 		}
 	case *CallExpression:
 		if node.Function.TokenLiteral() != "unquote" {
+			node.Function = Modify(node.Function, modifier).(Expression)
 			for i, _ := range node.Arguments {
 				node.Arguments[i] = Modify(node.Arguments[i], modifier).(Expression)
 			}
